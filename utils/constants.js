@@ -4,10 +4,10 @@ const INCORRECT_URL = 'Некорректный URL';
 
 const INTERNAL_SERVER_ERROR = 'Внутренняя ошибка сервера';
 
-const UNAUTHORIZED = 'Unauthorized';
+const UNAUTHORIZED = 'Необходима вторизация';
 const BAD_REQUEST = 'Bad request';
 const FORBIDDEN = 'Forbidden';
-const NOT_FOUND = 'Resource not found';
+const NOT_FOUND = 'Ресурс не найден';
 const CONFLICT = 'Conflict';
 
 const EMAIL_EXISTS = 'Пользователь с такой почтой уже существует';
