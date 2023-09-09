@@ -32,7 +32,7 @@ module.exports.addUser = (req, res, next) => {
     })
     .catch((error) => {
       if (error.code === 11000) {
-        next(new ConflictError('Пользователь с таким электронным адресом уже зарегистрирован'));
+        next(new ConflictError(EMAIL_EXISTS));
       } else if (error instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError(error.message));
       } else {
