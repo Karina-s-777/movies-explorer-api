@@ -1,15 +1,15 @@
 const { HTTP_STATUS_CREATED, HTTP_STATUS_OK } = require('http2').constants;
 const { default: mongoose } = require('mongoose');
 const Movie = require('../models/movie');
-const NotFoundError = require('../errors/NotFoundError');
-const BadRequestError = require('../errors/BadRequestError');
-const ForbiddenError = require('../errors/ForbiddenError');
+const NotFoundError = require('../utils/errors/NotFoundError');
+const BadRequestError = require('../utils/errors/BadRequestError');
+const ForbiddenError = require('../utils/errors/ForbiddenError');
 
 module.exports.getMovies = (req, res, next) => {
   // используем методы mongo find и т.д.
   // Пустой объект метода ({}) вернет все объекты, которые мы писали в базе
-  Movie.find({})
-    .populate(['owner'])
+  Movie.find({ owner: req.user._id })
+    .populate('owner')
     .then((movies) => {
       res.status(HTTP_STATUS_OK).send(movies);
     })

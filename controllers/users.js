@@ -4,11 +4,12 @@ const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
 
 const { SECRET_KEY } = require('../utils/config');
-const BadRequestError = require('../errors/BadRequestError');
-const NotFoundError = require('../errors/NotFoundError');
-const ConflictError = require('../errors/ConflictError');
+const BadRequestError = require('../utils/errors/BadRequestError');
+const NotFoundError = require('../utils/errors/NotFoundError');
+const ConflictError = require('../utils/errors/ConflictError');
 
 const User = require('../models/user');
+const { EMAIL_EXISTS } = require('../utils/constants');
 
 // Создание документов
 module.exports.addUser = (req, res, next) => {
@@ -74,6 +75,8 @@ module.exports.editUserData = (req, res, next) => {
         next(new BadRequestError(error.message));
       } else if (error instanceof mongoose.Error.DocumentNotFoundError) {
         next(new NotFoundError('Пользователь не найден'));
+      } else if (error.code === 11000) {
+        next(new ConflictError(EMAIL_EXISTS));
       } else {
         next(error);
       }

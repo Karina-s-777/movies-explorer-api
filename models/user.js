@@ -4,7 +4,8 @@
 // Зададим схему для пользователя через Mongoose:
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // импортируем bcrypt
-const UnauthorizedError = require('../errors/UnauthorizedError');
+const UnauthorizedError = require('../utils/errors/UnauthorizedError');
+const { UNAUTHORIZED } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -44,12 +45,12 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(email,
     .select('+password')
     .then((user) => {
       if (!user) {
-        throw new UnauthorizedError('Пользователь не найден');
+        throw new UnauthorizedError(UNAUTHORIZED);
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new UnauthorizedError('Неправильные почта или пароль 333');
+            throw new UnauthorizedError(UNAUTHORIZED);
           }
           return user; // теперь user доступен
         });

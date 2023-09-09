@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { URL_REGEX } = require('../utils/validation');
+const { INCORRECT_URL } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -29,7 +30,7 @@ const movieSchema = new mongoose.Schema({
       validator(url) { // Регулярное выражение email
         return URL_REGEX.test(url);
       },
-      message: 'Введите верные данные',
+      message: INCORRECT_URL,
     },
   },
   trailerLink: {
@@ -39,7 +40,7 @@ const movieSchema = new mongoose.Schema({
       validator(url) { // Регулярное выражение email
         return URL_REGEX.test(url);
       },
-      message: 'Введите верные данные',
+      message: INCORRECT_URL,
     },
   },
   thumbnail: {
@@ -49,7 +50,7 @@ const movieSchema = new mongoose.Schema({
       validator(url) { // Регулярное выражение email
         return URL_REGEX.test(url);
       },
-      message: 'Введите верные данные',
+      message: INCORRECT_URL,
     },
   },
   owner: {
